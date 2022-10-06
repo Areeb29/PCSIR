@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    margin: 20px;
+}
+
+/* ---aside/left---- */
+.aside {
+    width: 270px;
+    min-height: 100vh;
+    background-color: rgba(255, 255, 255, 0.201);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 20px;
+    /* position: fixed; */
+    /* left: 0;
+    top: 0; */
+    /* margin-left: -10px;
+    padding-left: 30px; */
+    /* z-index: 5; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    transition: all 0.3s ease;
+}
+.button1 {
+    margin: 10px 0 0 2px;    
+    width: 150px;
+    padding: 15px;
+    border: 0;
+    background: linear-gradient(to bottom right, #c3a4f5fe, #9ca5f4);
+    border-radius: 10px;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    font-family: 'Alegreya SC', serif;
+    font-size: 16px;
+}
+
+.button1:hover {
+    box-shadow: 0 0 .25rem rgba(152, 151, 171, 0.5), -.125rem -.125rem 1rem rgba(135, 71, 239, 0.5), .125rem .125rem 1rem rgba(90, 255, 255, 0.5);
+}
+
+/* ------------------------right-----------------------*/
+.main-content {
+    padding-left: 270px;
+}
+
+.section {
+    background-color: rgba(255, 255, 255, 0.201);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 20px;
+    min-height: 100vh;
+    margin: 20px;
+    padding-top: 20px;
+    padding-left: 50px;
+    display: block;
+    position: absolute;
+    left: 290px;
+    top: 0;
+    right: 0;   
+}
+
+
+/* ---------Upload button--------- */
+
+::-webkit-file-upload-button {
+    visibility: hidden;
+    margin-left: -85px;
+    border-radius: 5px;
+    border: none;
+}
+
+input[type="file"] {
+    padding: 7px;
+    color: black;
+    background: rgb(191, 236, 240);
+    border-radius: 4px;
+    font-family: "Alegreya SC", serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 150px;
+    cursor: pointer;
+}
+
+/* ----OUTPUT IMAGE-----*/
+
+#wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* width: 995px; */
+}
+
+#output_image {
+    margin-top: 50px;
+    max-width: 500px;
+}
+/* #output_image:hover {
+    transform: scale(1.4);
+    transition: .5s ease-out;
+} */
+
+.zoom{
+    transform: scale(1.4);
+    transition: .5s ease-out;
+}
+
+
+
+
+
+
+
+.filesContent{
+    float: right;
+    min-width: 400px;
+    max-width: 400px;
+    overflow-wrap:break-word;
+}
+.filesContent li {
+    list-style:decimal;
+}
