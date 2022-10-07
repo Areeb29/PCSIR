@@ -5,7 +5,7 @@ const AuthenticationLogin = () => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const url = "https://radiant-stream-68709.herokuapp.com/";
+    const url = "https://radiant-stream-68709.herokuapp.com";
 
     async function login(email, password) {
         var bodyData;

@@ -9,7 +9,7 @@ const ContentDoctor = () => {
     const navigate=useNavigate();
     const params = useParams();
     const designation = params.designation;
-    const url = "https://radiant-stream-68709.herokuapp.com/";
+    const url = "https://radiant-stream-68709.herokuapp.com";
     const [imgUrl, setImgUrl] = React.useState(null);
     const [images, setImages] = React.useState(null);
     const [differ, setDiffer] = React.useState(null);
