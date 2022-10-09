@@ -6,6 +6,7 @@ import ReactImageZoom from 'react-image-zoom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom'
 import url from '../config'
+import api from '../api';
 
 const ContentDoctor = () => {
     const navigate=useNavigate();
@@ -41,11 +42,8 @@ const ContentDoctor = () => {
 
     async function getPrescription(image_name, doctor) {
 
-        const response = await axios(
+        const response = await api.get(`/data/getPrescription`,
             {
-                method: 'get',
-                url: `${url}/data/getPrescription`,
-                headers: { 'Content-Type': 'application/json' },
                 params: {
                     image_name: image_name,
                     doctor: doctor
@@ -58,11 +56,7 @@ const ContentDoctor = () => {
 
     async function getSuggestion(image_name) {
 
-        const response = await axios(
-            {
-                method: 'get',
-                url: `${url}/data/getSuggestion`,
-                headers: { 'Content-Type': 'application/json' },
+        const response = await api.get(`/data/getSuggestion`, {
                 params: {
                     image_name: image_name,
                 }
@@ -73,27 +67,23 @@ const ContentDoctor = () => {
     }
 
     async function addPrescription(image_name, doctor, prediction, suggestion) {
-        var bodyData;
-        bodyData = JSON.stringify({ image_name, doctor, prediction, suggestion })
-
-        const response = await fetch(`${url}/data/addPrescription`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: bodyData
-        });
-
+        var bodyData = { image_name, doctor, prediction, suggestion };
+        const response = await api.post('/data/addPrescription', bodyData);
         return response;
+        // const response = await fetch(`${url}/data/addPrescription`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: bodyData
+        // });
+
+        // return response;
     }
 
     async function getImages(folder, setFunc = 0) {
-        const response = await axios(
-            {
-                method: 'get',
-                url: `${url}/image/getImages/${folder}`,
-            }
-        )
+        const response = await api.get(`/image/getImages/${folder}`);
+
         if (setFunc !== 0) {
             setFunc(response.data);
         }
@@ -102,18 +92,19 @@ const ContentDoctor = () => {
 
     async function moveImage(oldFolder, newFolder) {
 
-        var bodyData;
-        bodyData = JSON.stringify({ currFile, oldFolder, newFolder })
+        var bodyData = { currFile, oldFolder, newFolder };
+        const response = await api.post('/image/moveImage', bodyData);
+        const res =  response.data;
 
-        const response = await fetch(`${url}/image/moveImage`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: bodyData
-        });
+        // const response = await fetch(`${url}/image/moveImage`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: bodyData
+        // });
 
-        const res = await response.json();
+        // const res = await response.json();
         if (res.type === "success") {
             if (designation === "A") {
                 getImages("PartialReviewed", setSubmittedFiles);

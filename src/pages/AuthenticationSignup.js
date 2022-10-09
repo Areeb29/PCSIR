@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import url from '../config'
+import api from '../api';
 
 const AuthenticationSignup = () => {
     const navigate = useNavigate();
@@ -12,28 +12,26 @@ const AuthenticationSignup = () => {
 
 
     async function signup(firstName, lastName, email, password, designation) {
-        var bodyData;
-        bodyData = JSON.stringify({ firstName, lastName, email, password, designation })
-        console.log(bodyData)
-        const response = await fetch(`${url}/user/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: bodyData
-        });
+        var bodyData = { firstName, lastName, email, password, designation };
+        const response = await api.post('/user/signup', bodyData);
+        return response.data;
+        // const response = await fetch(`${url}/user/signup`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: bodyData
+        // });
 
-        return await response.json();
+        // return await response.json();
     }
 
     const handleSubmitRegisterForm = async (event) => {
         event.preventDefault();
-        if(email==""||password==""||lName==""||fName==="")
-        {
+        if (email == "" || password == "" || lName == "" || fName === "") {
             alert("Please fill all fields")
         }
-        else
-        {
+        else {
             const EMAIL_REGEX = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
             const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
             // (?=.*[!@#$%^&*])(?=.{8,})
@@ -41,21 +39,19 @@ const AuthenticationSignup = () => {
                 // save email and password to local storage
                 // localStorage.setItem("email", email);
                 // localStorage.setItem("password", password);
-                var res = await signup(fName, lName,email, password,designation);
-                if(res?.message==="success")
-                {
+                var res = await signup(fName, lName, email, password, designation);
+                if (res?.message === "success") {
 
                     navigate("/login");
                 }
-                else
-                {
+                else {
                     alert(res?.message);
                 }
             } else {
                 alert("Invalid format for email or password");
             }
         }
-       
+
 
     }
     return (
@@ -108,7 +104,7 @@ const AuthenticationSignup = () => {
                                 </div>
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-5">
-                                    <label htmlFor className="text-xs font-semibold px-1">Designation</label>
+                                        <label htmlFor className="text-xs font-semibold px-1">Designation</label>
 
                                         <select className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" required aria-label="Default select example" value={designation} onChange={(e) => setDesignation(e.target.value)}>
                                             <option value="A">A</option>

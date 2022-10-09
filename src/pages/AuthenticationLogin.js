@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import url from '../config'
+import api from '../api'
 
 const AuthenticationLogin = () => {
     const navigate = useNavigate();
@@ -9,20 +9,12 @@ const AuthenticationLogin = () => {
 
 
     async function login(email, password) {
-        var bodyData;
-        bodyData = JSON.stringify({ email, password })
-
-        const response = await fetch(`${url}/user/login`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            body: bodyData
-        });
-        let jsonRes = await response.json()
-
-        return jsonRes;
+        
+        const response = await api.post(`/user/login`,
+            { email, password });
+        console.log(response.data);
+        return response.data;
+        
     }
 
     async function handleSubmitLoginForm(e) {
@@ -30,21 +22,17 @@ const AuthenticationLogin = () => {
         // fetch local storage email and password and compare with this entered
         // if matched then navigate to doctor page
         // else show error message
-        if(email===""||password==="")
-        {
+        if (email === "" || password === "") {
             alert("Please fill all fields");
         }
-        else
-        {
-            var res = await login(email,password);
+        else {
+            var res = await login(email, password);
             console.log(res)
-            if(res?.type==="success")
-            {
-                localStorage.setItem("login",true);
+            if (res?.type === "success") {
+                localStorage.setItem("login", true);
                 navigate(`/doctor/${res?.message}`);
             }
-            else
-            {
+            else {
                 alert(res?.message)
             }
         }
