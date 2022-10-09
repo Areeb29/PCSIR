@@ -15,12 +15,14 @@ const AuthenticationLogin = () => {
         const response = await fetch(`${url}/user/login`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: bodyData
         });
+        let jsonRes = await response.json()
 
-        return await response.json();
+        return jsonRes;
     }
 
     async function handleSubmitLoginForm(e) {
