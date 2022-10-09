@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import url from '../config'
 
 const AuthenticationLogin = () => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const url = "https://radiant-stream-68709.herokuapp.com";
+
 
     async function login(email, password) {
         var bodyData;

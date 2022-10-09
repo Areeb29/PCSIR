@@ -5,11 +5,13 @@ import _ from 'lodash';
 import ReactImageZoom from 'react-image-zoom';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom'
+import url from '../config'
+
 const ContentDoctor = () => {
     const navigate=useNavigate();
     const params = useParams();
     const designation = params.designation;
-    const url = "https://radiant-stream-68709.herokuapp.com";
+    
     const [imgUrl, setImgUrl] = React.useState(null);
     const [images, setImages] = React.useState(null);
     const [differ, setDiffer] = React.useState(null);
@@ -27,6 +29,7 @@ const ContentDoctor = () => {
         "Doctor C": ""
     })
     const props = { width: 400, height: 300, zoomWidth: 300, img: imgSrc, offset: { horizontal: 50 } };
+
     const [doctorDiseasePrescription, setDoctorDiseasePrescription] = React.useState({
         'Unclear Image': false,
         'Normal Image': false,
@@ -178,10 +181,12 @@ const ContentDoctor = () => {
     function resetToInitialState() {
         // reset all the state to initial state
         setDoctorDiseasePrescription({
-            'A': false,
-            'B': false,
-            'C': false,
-            'D': false,
+            'Unclear Image': false,
+            'Normal Image': false,
+            'Mild': false,
+            'Moderate': false,
+            'Severe': false,
+            'Proliferative': false,
         })
 
         // reset the image to null
@@ -296,7 +301,12 @@ const ContentDoctor = () => {
         if (!suggestion.data.type) {
             setDoctorSuggestion((prev) => { return { ...prev, ...suggestion.data } })
         }
-        differSelected ? setImgSrc(`${url}/images/differ/${differ[img]}`) : setImgSrc(`${url}/images/${imgUrl}/${images[img]}`)
+        // differSelected ? setImgSrc(`${url}/images/differ/${differ[img]}`) : setImgSrc(`${url}/images/${imgUrl}/${images[img]}`)
+        differSelected ?
+        setImgSrc(`${url}/image/${differ[img]}`)
+        :
+        setImgSrc(`${url}/image/${images[img]}`)
+
         setCurrFile(differSelected ? differ[img] : images[img])
     }
 
@@ -333,8 +343,14 @@ const ContentDoctor = () => {
                         <div className='min-h-[520px]'>
                             <div className="modal-body relative p-4 grid grid-cols-4 gap-4">
                                 {differSelected ?
-                                    differ && differ?.map((image, index) => <button key={index} className='focus:border-black border-2' onClick={() => { setImg(index) }}><img className='h-[90%] w-full' key={index} src={`${url}/images/differ/${image}`} alt="" /></button>)
-                                    : images && images?.map((image, index) => <button key={index} className='focus:border-black border-2' onClick={() => { setImg(index) }}><img className='h-[90%] w-full' key={index} src={`${url}/images/${imgUrl}/${image}`} alt="" /></button>)
+                                    differ && differ?.map((image, index) => <button key={index} className='focus:border-black border-2' onClick={() => { setImg(index) }}><img className='h-[90%] w-full' key={index} 
+                                    src={`${url}/image/${image}`}
+                                    // src = {`https://www.googleapis.com/drive/v3/files/${image}?alt=media&key=AIzaSyAgiFBJIw_rzYvQ7-mn4xfBKILNKEautRk`}
+                                     alt="" /></button>)
+                                    : images && images?.map((image, index) => <button key={index} className='focus:border-black border-2' onClick={() => { setImg(index) }}><img className='h-[90%] w-full' key={index} 
+                                    src={`${url}/image/${image}`}
+                                    // src = {`https://www.googleapis.com/drive/v3/files/${image}?alt=media&key=AIzaSyAgiFBJIw_rzYvQ7-mn4xfBKILNKEautRk`}
+                                    alt="" /></button>)
                                 }
 
                             </div>
@@ -406,8 +422,9 @@ const ContentDoctor = () => {
                     <br />
                     <div id="wrapper">
                         {
-                            imgSrc &&
+                            imgSrc && 
                             <div>
+                               
                                 <ReactImageZoom {...props} />
                             </div>
 
