@@ -294,9 +294,12 @@ const ContentDoctor = () => {
         }
         // differSelected ? setImgSrc(`${url}/images/differ/${differ[img]}`) : setImgSrc(`${url}/images/${imgUrl}/${images[img]}`)
         differSelected ?
-        setImgSrc(`${url}/image/${differ[img]}`)
+        // setImgSrc(`${url}/image/${differ[img]}`)
+        setImgSrc(`https://www.googleapis.com/drive/v3/files/${differ[img]}?alt=media&key=AIzaSyAgiFBJIw_rzYvQ7-mn4xfBKILNKEautRk`)
+
         :
-        setImgSrc(`${url}/image/${images[img]}`)
+        // setImgSrc(`${url}/image/${images[img]}`)
+        setImgSrc(`https://www.googleapis.com/drive/v3/files/${images[img]}?alt=media&key=AIzaSyAgiFBJIw_rzYvQ7-mn4xfBKILNKEautRk`);
 
         setCurrFile(differSelected ? differ[img] : images[img])
     }
