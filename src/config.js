@@ -1,4 +1,4 @@
-    // const url = "https://radiant-stream-68709.herokuapp.com";
-    const url = "http://localhost:80";
+    const url = "https://pcsir-backend.vercel.app/";
+    // const url = "http://localhost:80";
     
     export default url
